@@ -8,6 +8,34 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__="user"
+    id= Column(Integer, primary_key=True)
+    name=Column(String(250),nullable=False, unique=False)
+    lastname=Column(String(250),nullable=False, unique=False)
+    user=Column(String(250), nullable=False,unique=True)
+    email=Column(String(100), nullable=False, unique=True)
+
+class Post(Base):
+    __tablename__="post"
+    id= Column(Integer, primary_key=True)
+    user_id= Column(Integer, ForeignKey("user.id"))
+    user = relationship (User)
+    
+class Like(Base):
+    __tablename__="like"
+    id= Column(Integer, primary_key=True)
+    user_id= Column(Integer, ForeignKey("user.id"))
+    post_id=Column(Integer, ForeignKey("post.id"))
+    user = relationship (User)
+
+class Comment(Base):
+    __tablename__="comment"
+    id= Column(Integer, primary_key=True)
+    user_id= Column(Integer, ForeignKey("user.id"))
+    post_id=Column(Integer, ForeignKey("post.id"))
+    user = relationship (User)
+
 
 
 # class Person(Base):
